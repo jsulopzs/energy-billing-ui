@@ -3,14 +3,14 @@ import json
 import requests
 from io import BytesIO
 import pandas as pd
+import os
 
 options = {
     'ATR': ['2.0TD', '3.0TD', '6.1TD', '6.2TD', '6.3TD', '6.4TD'],
     'POSITION': ['Pérdidas', 'Tasas', 'Precio Plano', 'Fuera de Fórmula']
 }
 
-# URL construction
-BASE_URL = "http://127.0.0.1:8000"
+BASE_URL = st.secrets['API_URL']
 endpoint_path = "/billing/consumption/calculate"
 
 FORMULA = {
