@@ -4,3 +4,4 @@ openpyxl
 streamlit
 jinja2
 python-dotenv
+plotly
