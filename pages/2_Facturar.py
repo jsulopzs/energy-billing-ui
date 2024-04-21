@@ -25,10 +25,10 @@ response = None
 
 with st.sidebar.form(key='form'):
     
-    FILE = st.file_uploader('**Curva**', type=['csv'])
+    FILE = st.file_uploader('**Curva preprocesada**', type=['csv'])
     ATR = st.selectbox('**ATR**', options['ATR'], index=1)
     DESVIOS = st.number_input('**DESVÍOS**', value=0.0, step=0.1)
-    DATES = st.date_input('**Fechas**', [], key='dates', help='Fechas de inicio y fin del periodo de facturación')
+    DATES = st.date_input('**FECHAS**', [], key='dates', help='Fechas de inicio y fin del periodo de facturación')
 
     for column in FORMULA:
         st.write(f'**{column}**')
@@ -76,13 +76,13 @@ if button:
     st.write(f'# Resultados')
 
     data = BytesIO(response.content)
-    
-    col1, col2 = st.columns([.8,.2])
+    col1,col2 = st.columns([.1,.9])
     
     with col1:
-        st.info('Puedes descargar los siguientes reportes en un Excel →')
+        emo = ':floppy_disk:'
+        button = st.download_button(emo, data=data, file_name='report.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     with col2:
-        st.download_button(label='Descargar', data=data, file_name='report.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        st.info('Descarga los siguientes resultados en un archivo Excel.')
         
     mapping = {
         'PRECIO PONDERADO': {
