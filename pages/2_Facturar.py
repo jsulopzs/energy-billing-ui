@@ -42,7 +42,7 @@ with st.sidebar.form(key='form'):
 
 
 def write_excel(data, sheet_name, index_col):
-    df = pd.read_excel(data, sheet_name=sheet_name, index_col=index_col)
+    df = pd.read_excel(data, sheet_name=sheet_name, index_col=index_col, engine='openpyxl')
     dff = (df
         .style
             .highlight_null(props='color: transparent; background-color: transparent;')
@@ -102,5 +102,4 @@ if button:
     for key, value in mapping.items():
         
         st.write(f'## {key.title()}')
-        
         write_excel(data, value['sheet_name'], value['index_col'])
