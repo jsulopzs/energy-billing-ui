@@ -51,6 +51,10 @@ def write_excel(data, sheet_name, index_col):
     st.write(dff, unsafe_allow_html=True)
 
 if button:
+    
+    if not DATES and not FILE:
+        st.warning('Por favor, sube un archivo o introduce las fechas.')
+        st.stop()
 
     url = f"{BASE_URL}{endpoint_path}"
     DATES = [str(date) for date in DATES]
@@ -68,19 +72,26 @@ if button:
         })
     }
 
-    files = {'file': (FILE.name, FILE, FILE.type)}
+    if FILE:
+        files = {'file': (FILE.name, FILE, FILE.type)}
+    else:
+        files = None
     
     with st.spinner('Calculando...'):
         response = requests.post(url, files=files, data=data)
             
     st.write(f'# Resultados')
 
-    data = BytesIO(response.content)
+    path_report = 'report.xlsx'
+    if response.status_code == 200:
+        with open(path_report, 'wb') as f:
+            f.write(response.content)
+    
     col1,col2 = st.columns([.1,.9])
     
     with col1:
         emo = ':floppy_disk:'
-        button = st.download_button(emo, data=data, file_name='report.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        button = st.download_button(emo, data=BytesIO(response.content), file_name='report.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     with col2:
         st.info('Descarga los siguientes resultados en un archivo Excel.')
         
@@ -102,4 +113,4 @@ if button:
     for key, value in mapping.items():
         
         st.write(f'## {key.title()}')
-        write_excel(data, value['sheet_name'], value['index_col'])
+        write_excel(path_report, value['sheet_name'], value['index_col'])
