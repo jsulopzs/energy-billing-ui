@@ -25,7 +25,8 @@ response = None
 
 with st.sidebar.form(key='form'):
     
-    FILE = st.file_uploader('**Curva preprocesada**', type=['csv'])
+    # FILE = st.file_uploader('**Curva preprocesada**', type=['csv'])
+    FILE = None
     ATR = st.selectbox('**ATR**', options['ATR'], index=1)
     DESVIOS = st.number_input('**DESVÍOS**', value=0.0, step=0.1)
     DATES = st.date_input('**FECHAS**', [], key='dates', help='Fechas de inicio y fin del periodo de facturación')
