@@ -28,8 +28,8 @@ with st.sidebar.form(key='form'):
     # FILE = st.file_uploader('**Curva preprocesada**', type=['csv'])
     FILE = None
     ATR = st.selectbox('**ATR**', options['ATR'], index=1)
-    DESVIOS = st.number_input('**DESVÍOS**', value=0.0, step=0.1)
     DATES = st.date_input('**FECHAS**', [], key='dates', help='Fechas de inicio y fin del periodo de facturación')
+    DESVIOS = st.number_input('**DESVÍOS**', value=0.0, step=0.1)
 
     for column in FORMULA:
         st.write(f'**{column}**')
@@ -97,18 +97,18 @@ if button:
         st.info('Descarga los siguientes resultados en un archivo Excel.')
         
     mapping = {
-        'PRECIO PONDERADO': {
+        'PRECIO': {
             'sheet_name': 'PRECIO PONDERADO',
             'index_col': [0,1]
         },
-        'ENERGÍA': {
-            'sheet_name': 'ENERGÍA',
-            'index_col': 0
-        },
-        'COSTE': {
-            'sheet_name': 'COSTE',
-            'index_col': [0,1]
-        }
+        # 'ENERGÍA': {
+        #     'sheet_name': 'ENERGÍA',
+        #     'index_col': 0
+        # },
+        # 'COSTE': {
+        #     'sheet_name': 'COSTE',
+        #     'index_col': [0,1]
+        # }
     }
     
     for key, value in mapping.items():
